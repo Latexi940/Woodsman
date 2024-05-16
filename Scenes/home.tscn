@@ -1,0 +1,568 @@
+[gd_scene load_steps=17 format=3 uid="uid://cb8exifisfir4"]
+
+[ext_resource type="PackedScene" uid="uid://bl24y8u3tgdnj" path="res://Scenes/player.tscn" id="1_exirl"]
+[ext_resource type="Script" path="res://Scripts/home.gd" id="1_wctwx"]
+[ext_resource type="PackedScene" uid="uid://c20l0u5vk6jii" path="res://Scenes/tree.tscn" id="3_5pru5"]
+[ext_resource type="PackedScene" uid="uid://x4ynrx65314w" path="res://Scenes/campfire.tscn" id="4_11tdp"]
+[ext_resource type="Texture2D" uid="uid://cur27wjxonwi2" path="res://Assets/Omat/nightSky.png" id="5_crxiw"]
+[ext_resource type="PackedScene" uid="uid://c5p2ud8urkaua" path="res://Scenes/torch.tscn" id="6_1jqdg"]
+[ext_resource type="PackedScene" uid="uid://c7oi78g5lhtw5" path="res://Scenes/signpost.tscn" id="7_leunp"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_y7vf1"]
+panorama = ExtResource("5_crxiw")
+
+[sub_resource type="Sky" id="Sky_cuk5s"]
+sky_material = SubResource("PanoramaSkyMaterial_y7vf1")
+
+[sub_resource type="Environment" id="Environment_k6qtw"]
+background_mode = 2
+sky = SubResource("Sky_cuk5s")
+sky_rotation = Vector3(1.5708, 1.5708, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_iwvvr"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p2g46"]
+size = Vector2(50, 50)
+
+[sub_resource type="Skin" id="Skin_onaex"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1urp"]
+albedo_color = Color(0.145098, 0.431373, 0.25098, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7o68n"]
+size = Vector3(0.1, 6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tn2wx"]
+size = Vector3(1, 5, 50)
+
+[node name="Home" type="Node3D"]
+script = ExtResource("1_wctwx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.608761, 0.786566, 0.103554, 0, -0.130526, 0.991445, 0.793353, -0.603553, -0.0794594, 0, 23.2283, 0)
+visible = false
+light_energy = 5.734
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k6qtw")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.979575, -0.114758, 0.165115, 0, 0.821149, 0.570714, -0.201078, -0.559057, 0.804377, 6.73495, 10.9627, 13.0063)
+light_color = Color(0.721569, 1, 1, 1)
+light_energy = 0.03
+
+[node name="Floor" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_iwvvr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_p2g46")
+skin = SubResource("Skin_onaex")
+surface_material_override/0 = SubResource("StandardMaterial3D_q1urp")
+
+[node name="Player" parent="." instance=ExtResource("1_exirl")]
+transform = Transform3D(0.894381, 0, 0.447306, 0, 1, 0, -0.447306, 0, 0.894381, 5.12861, 0, 11.1782)
+
+[node name="ToForest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 17)
+
+[node name="Tree" parent="ToForest" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="Tree2" parent="ToForest" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="ForestGateArea3D" type="Area3D" parent="ToForest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.95, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToForest/ForestGateArea3D"]
+shape = SubResource("BoxShape3D_7o68n")
+
+[node name="Campfire" parent="." instance=ExtResource("4_11tdp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.28866, 0, 2.39885)
+
+[node name="Tree" parent="." instance=ExtResource("3_5pru5")]
+transform = Transform3D(0.775584, 0, -0.631245, 0, 1, 0, 0.631245, 0, 0.775584, -7, 0, -5)
+
+[node name="Tree2" parent="." instance=ExtResource("3_5pru5")]
+transform = Transform3D(0.939107, 0.00225866, -0.343618, -0.00249127, 0.999997, -0.000235452, 0.343616, 0.00107718, 0.939109, 5, 0, 2)
+
+[node name="Tree3" parent="." instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 8)
+
+[node name="Boundaries" type="Node3D" parent="."]
+
+[node name="Tree4" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6392, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree5" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0977, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree6" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.6413, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree7" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.3576, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree8" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4259, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree9" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7387, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree10" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9043, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree11" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9787, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree12" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0391, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree13" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.14081, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree14" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.90303, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree15" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.90303, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree16" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.65647, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree17" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.134428, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree18" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.81759, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree19" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.26194, 0, 23.6815)
+max_health = 9999999
+
+[node name="Tree20" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1301, 0.254786, 23.7908)
+max_health = 9999999
+
+[node name="Tree21" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.03329, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree22" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0033, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree23" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4056, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree24" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8502, 0.254791, 23.7608)
+max_health = 9999999
+
+[node name="Tree25" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.1769, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree26" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1769, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree28" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8527, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree29" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1607, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree30" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5665, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree31" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5665, 0.254791, 24.1015)
+max_health = 9999999
+
+[node name="Tree32" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5665, 0.254791, 21.8533)
+max_health = 9999999
+
+[node name="Tree33" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5665, 0.254791, 12.6645)
+max_health = 9999999
+
+[node name="Tree34" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5665, -0.269032, 12.6645)
+max_health = 9999999
+
+[node name="Tree35" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 10.9853)
+max_health = 9999999
+
+[node name="Tree36" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 9.34497)
+max_health = 9999999
+
+[node name="Tree37" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 7.04734)
+max_health = 9999999
+
+[node name="Tree38" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 5.4899)
+max_health = 9999999
+
+[node name="Tree39" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 3.82047)
+max_health = 9999999
+
+[node name="Tree40" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 2.12474)
+max_health = 9999999
+
+[node name="Tree41" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, 0.79714)
+max_health = 9999999
+
+[node name="Tree42" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -1.07787)
+max_health = 9999999
+
+[node name="Tree43" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2003, 0.254791, -2.70318)
+max_health = 9999999
+
+[node name="Tree44" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -4.6779)
+max_health = 9999999
+
+[node name="Tree45" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -6.6779)
+max_health = 9999999
+
+[node name="Tree46" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -8.25442)
+max_health = 9999999
+
+[node name="Tree47" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -10.2544)
+max_health = 9999999
+
+[node name="Tree48" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -12.1312)
+max_health = 9999999
+
+[node name="Tree49" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2408, 0.254791, -14.1312)
+max_health = 9999999
+
+[node name="Tree50" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -16.1109)
+max_health = 9999999
+
+[node name="Tree51" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -17.6699)
+max_health = 9999999
+
+[node name="Tree52" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -18.9188)
+max_health = 9999999
+
+[node name="Tree53" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -20.8927)
+max_health = 9999999
+
+[node name="Tree54" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -22.8927)
+max_health = 9999999
+
+[node name="Tree55" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -22.8927)
+max_health = 9999999
+
+[node name="Tree56" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.087, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree57" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.8566, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree58" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9215, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree59" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2342, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree60" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9163, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree61" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9163, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree112" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5766, 0.254791, -23.5948)
+max_health = 9999999
+
+[node name="Tree62" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8439, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree63" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.0936, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree64" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09356, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree65" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.09356, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree66" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.27608, 0.254791, -22.4237)
+max_health = 9999999
+
+[node name="Tree111" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94586, 0.254791, -23.5428)
+max_health = 9999999
+
+[node name="Tree68" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.929552, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree69" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.987514, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree70" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.11476, 0.254791, -24.0869)
+max_health = 9999999
+
+[node name="Tree71" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.23902, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree72" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 0.999689, -0.0249556, 0, 0.0249556, 0.999689, -7.4663, 0.254791, -23.727)
+max_health = 9999999
+
+[node name="Tree73" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.4663, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree74" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4663, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree75" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4663, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree76" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.9984, 0.254791, -23.9485)
+max_health = 9999999
+
+[node name="Tree77" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9984, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree78" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.1044, 0.254791, -23.8942)
+max_health = 9999999
+
+[node name="Tree79" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.8925, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree80" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7343, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree81" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7343, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree82" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree83" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -23.6493)
+max_health = 9999999
+
+[node name="Tree84" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9351, 0.254791, -22.228)
+max_health = 9999999
+
+[node name="Tree85" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -20.7794)
+max_health = 9999999
+
+[node name="Tree86" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -18.6577)
+max_health = 9999999
+
+[node name="Tree87" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.7446, 0.254791, -16.086)
+max_health = 9999999
+
+[node name="Tree88" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -14.086)
+max_health = 9999999
+
+[node name="Tree89" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -12.086)
+max_health = 9999999
+
+[node name="Tree90" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.0524, 0.254791, -10.086)
+max_health = 9999999
+
+[node name="Tree91" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -8.21418)
+max_health = 9999999
+
+[node name="Tree92" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -5.21418)
+max_health = 9999999
+
+[node name="Tree93" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -3.27026)
+max_health = 9999999
+
+[node name="Tree94" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, -1.6922)
+max_health = 9999999
+
+[node name="Tree95" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.235, 0.254791, -0.692203)
+max_health = 9999999
+
+[node name="Tree96" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 1.3078)
+max_health = 9999999
+
+[node name="Tree97" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 3.17353)
+max_health = 9999999
+
+[node name="Tree98" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2298, 0.254791, 4.17353)
+max_health = 9999999
+
+[node name="Tree99" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 6.31974)
+max_health = 9999999
+
+[node name="Tree100" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 7.85933)
+max_health = 9999999
+
+[node name="Tree101" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 9.85933)
+max_health = 9999999
+
+[node name="Tree102" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 11.4112)
+max_health = 9999999
+
+[node name="Tree103" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 13.4002)
+max_health = 9999999
+
+[node name="Tree104" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9781, 0.254791, 14.4002)
+max_health = 9999999
+
+[node name="Tree105" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 16.0422)
+max_health = 9999999
+
+[node name="Tree106" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.3458, 0.254791, 17.473)
+max_health = 9999999
+
+[node name="Tree107" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 18.473)
+max_health = 9999999
+
+[node name="Tree108" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.9471, 1.04058, 19.9968)
+max_health = 9999999
+
+[node name="Tree109" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 21.8715)
+max_health = 9999999
+
+[node name="Tree110" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6294, 0.254791, 21.8715)
+max_health = 9999999
+
+[node name="Tree67" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.98693, 0.254791, -24.6493)
+max_health = 9999999
+
+[node name="Tree27" parent="Boundaries" instance=ExtResource("3_5pru5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+max_health = 9999999
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 2.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/StaticBody3D"]
+shape = SubResource("BoxShape3D_tn2wx")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/StaticBody3D2"]
+shape = SubResource("BoxShape3D_tn2wx")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.5, 25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/StaticBody3D3"]
+shape = SubResource("BoxShape3D_tn2wx")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Boundaries"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.5, -25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundaries/StaticBody3D4"]
+shape = SubResource("BoxShape3D_tn2wx")
+
+[node name="Torch" parent="." instance=ExtResource("6_1jqdg")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 19.813, 0, 18.984)
+
+[node name="Torch2" parent="." instance=ExtResource("6_1jqdg")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 19.813, 0, 15.1973)
+
+[node name="LogSign" parent="." instance=ExtResource("7_leunp")]
+transform = Transform3D(-0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, -0.906308, 2.49035, 0, 3.05411)
+
+[connection signal="body_entered" from="ToForest/ForestGateArea3D" to="." method="_on_forest_gate_area_3d_body_entered"]

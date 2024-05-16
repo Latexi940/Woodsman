@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://c5p2ud8urkaua"]
+
+[ext_resource type="PackedScene" uid="uid://dyv2qox1kq36s" path="res://Assets/Omat/torch_simplified.blend" id="1_14cj5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ivpkc"]
+height = 6.608
+radius = 1.06
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mu8og"]
+lifetime_randomness = 0.19
+emission_shape = 1
+emission_sphere_radius = 0.6
+spread = 71.939
+gravity = Vector3(0, 0.5, 0)
+radial_accel_min = -1.0
+color = Color(0.760784, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6bma"]
+albedo_color = Color(0.584314, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ae5ya"]
+material = SubResource("StandardMaterial3D_n6bma")
+size = Vector3(0.03, 0.03, 0.03)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e5mvv"]
+lifetime_randomness = 0.04
+emission_shape = 1
+emission_sphere_radius = 0.5
+gravity = Vector3(0, 0.5, 0)
+radial_accel_min = -0.01
+radial_accel_max = -0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rh4c"]
+albedo_color = Color(0.811765, 0.286275, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l4847"]
+material = SubResource("StandardMaterial3D_8rh4c")
+size = Vector3(0.03, 0.03, 0.03)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u2ovu"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 97.653
+gravity = Vector3(0, 0.5, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nr3us"]
+size = Vector3(0.04, 0.04, 0.04)
+
+[node name="Torch" type="StaticBody3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+collision_layer = 4
+collision_mask = 3
+
+[node name="torch_simplified" parent="." instance=ExtResource("1_14cj5")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.86104, 0)
+shape = SubResource("CylinderShape3D_ivpkc")
+
+[node name="Fire" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0114889, 6.69174, -0.0190086)
+
+[node name="BottomFire" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1.61117, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.282246, 0)
+cast_shadow = 0
+amount = 30
+lifetime = 0.21
+process_material = SubResource("ParticleProcessMaterial_mu8og")
+draw_pass_1 = SubResource("BoxMesh_ae5ya")
+
+[node name="MainFire" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11568, 0)
+cast_shadow = 0
+amount = 30
+lifetime = 0.8
+randomness = 0.09
+process_material = SubResource("ParticleProcessMaterial_e5mvv")
+draw_pass_1 = SubResource("BoxMesh_l4847")
+
+[node name="Smoke" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.165, 0)
+amount = 30
+lifetime = 2.0
+visibility_aabb = AABB(-4, -3.30474, -4, 8, 6.60948, 8)
+process_material = SubResource("ParticleProcessMaterial_u2ovu")
+draw_pass_1 = SubResource("BoxMesh_nr3us")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85704, 0)
+light_color = Color(0.984314, 0.760784, 0.517647, 1)
+light_energy = 3.0
+light_size = 1.0
+light_specular = 0.05
+shadow_enabled = true
+shadow_bias = 0.345
+omni_range = 7.0
+omni_attenuation = 2.2974
+omni_shadow_mode = 0

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://btxhbqyhybps5"]
+
+[ext_resource type="Script" path="res://Scripts/treeHolder.gd" id="1_sjvwg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x7dnb"]
+size = Vector3(5, 0.1, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okuxl"]
+albedo_color = Color(0.658824, 0.658824, 0.658824, 1)
+metallic = 0.58
+metallic_specular = 0.6
+roughness = 0.54
+
+[sub_resource type="BoxMesh" id="BoxMesh_nouop"]
+material = SubResource("StandardMaterial3D_okuxl")
+size = Vector3(5, 0.1, 7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e8od2"]
+size = Vector3(0.1, 2, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_af235"]
+material = SubResource("StandardMaterial3D_okuxl")
+size = Vector3(0.1, 2, 7)
+
+[node name="TreeHolder" type="Node3D" groups=["WorldObject"]]
+script = ExtResource("1_sjvwg")
+
+[node name="Holder" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Holder"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holder/StaticBody3D"]
+shape = SubResource("BoxShape3D_x7dnb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Holder/StaticBody3D"]
+mesh = SubResource("BoxMesh_nouop")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.54236, 0.762874, 0)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holder/StaticBody3D2"]
+shape = SubResource("BoxShape3D_e8od2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Holder/StaticBody3D2"]
+mesh = SubResource("BoxMesh_af235")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Holder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45764, 0.762874, 0)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Holder/StaticBody3D3"]
+shape = SubResource("BoxShape3D_e8od2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Holder/StaticBody3D3"]
+mesh = SubResource("BoxMesh_af235")

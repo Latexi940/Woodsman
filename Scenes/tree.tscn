@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://c20l0u5vk6jii"]
+
+[ext_resource type="Script" path="res://Scripts/tree.gd" id="1_lcuei"]
+[ext_resource type="PackedScene" uid="uid://decjt3c0hobox" path="res://Assets/Omat/tree2.blend" id="2_ly7ig"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7mdxl"]
+top_radius = 0.25
+bottom_radius = 0.3
+height = 7.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7s6rw"]
+albedo_color = Color(0.4, 0.215686, 0.113725, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ojt0w"]
+radius = 0.24
+height = 7.18
+
+[node name="Tree" type="RigidBody3D" groups=["Tree"]]
+disable_mode = 2
+collision_layer = 2
+collision_mask = 7
+mass = 50.0
+freeze = true
+freeze_mode = 1
+contact_monitor = true
+script = ExtResource("1_lcuei")
+
+[node name="TrunkMeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.40425, 0)
+mesh = SubResource("CylinderMesh_7mdxl")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_7s6rw")
+
+[node name="TreeCollider" type="CollisionShape3D" parent="." groups=["Tree"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.48222, 0)
+shape = SubResource("CapsuleShape3D_ojt0w")
+
+[node name="FallTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="FreezeTimer" type="Timer" parent="."]
+wait_time = 45.0
+
+[node name="TreeModel" parent="." instance=ExtResource("2_ly7ig")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 0)
+
+[connection signal="timeout" from="FallTimer" to="." method="_on_fall_timer_timeout"]
+[connection signal="timeout" from="FreezeTimer" to="." method="_on_freeze_timer_timeout"]

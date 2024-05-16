@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bl24y8u3tgdnj"]
+
+[ext_resource type="Script" path="res://Scripts/player.cs" id="1_gn1x2"]
+[ext_resource type="PackedScene" uid="uid://r8kt84nbenl2" path="res://Scenes/barbarian.tscn" id="2_6xwao"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hhle6"]
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+collision_mask = 6
+script = ExtResource("1_gn1x2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_hhle6")
+
+[node name="BarbarianModel" parent="." instance=ExtResource("2_6xwao")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 1.47534, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 8.9407e-08, 0, -5.96046e-08, 1, 0, 0.132, 5.98)
+current = true
+fov = 83.0

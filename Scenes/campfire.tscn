@@ -1,0 +1,94 @@
+[gd_scene load_steps=11 format=3 uid="uid://x4ynrx65314w"]
+
+[ext_resource type="PackedScene" uid="uid://bah0ggobkcmo4" path="res://Assets/Omat/campfire2.blend" id="1_fk7e5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jxq7d"]
+height = 0.94
+radius = 1.875
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xqt6p"]
+lifetime_randomness = 0.19
+emission_shape = 1
+emission_sphere_radius = 1.35
+spread = 71.939
+gravity = Vector3(0, 3, 0)
+radial_accel_min = -1.0
+radial_accel_max = -1.0
+color = Color(0.760784, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wffpx"]
+albedo_color = Color(0.584314, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0otlf"]
+material = SubResource("StandardMaterial3D_wffpx")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dlq5j"]
+lifetime_randomness = 0.04
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 3, 0)
+radial_accel_min = -1.0
+radial_accel_max = -1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lkqq"]
+albedo_color = Color(0.811765, 0.286275, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fd7gf"]
+material = SubResource("StandardMaterial3D_0lkqq")
+size = Vector3(0.15, 0.15, 0.15)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75tek"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 97.653
+gravity = Vector3(0, 1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xpxtj"]
+size = Vector3(0.07, 0.07, 0.07)
+
+[node name="Campfire" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="campfire2" parent="StaticBody3D" instance=ExtResource("1_fk7e5")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184069, 0)
+shape = SubResource("CylinderShape3D_jxq7d")
+
+[node name="Fire" type="Node3D" parent="."]
+
+[node name="BottomFire" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.282246, 0)
+cast_shadow = 0
+amount = 50
+lifetime = 0.21
+process_material = SubResource("ParticleProcessMaterial_xqt6p")
+draw_pass_1 = SubResource("BoxMesh_0otlf")
+
+[node name="MainFire" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27399, 0)
+cast_shadow = 0
+amount = 50
+lifetime = 0.67
+randomness = 0.09
+process_material = SubResource("ParticleProcessMaterial_dlq5j")
+draw_pass_1 = SubResource("BoxMesh_fd7gf")
+
+[node name="Smoke" type="GPUParticles3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.63952, 0)
+amount = 100
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_75tek")
+draw_pass_1 = SubResource("BoxMesh_xpxtj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Fire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94603, 0)
+light_color = Color(0.929412, 0.631373, 0.262745, 1)
+light_energy = 9.0
+light_size = 0.724
+shadow_enabled = true
+omni_range = 12.0

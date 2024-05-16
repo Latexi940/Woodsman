@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7oi78g5lhtw5"]
+
+[ext_resource type="PackedScene" uid="uid://cymdiptg6edwh" path="res://Assets/Omat/signpost_simplified.blend" id="1_ikirr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7xhnb"]
+size = Vector3(0.53, 3.36, 1.995)
+
+[node name="SignPost" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0698439, 0.930827, 0)
+shape = SubResource("BoxShape3D_7xhnb")
+
+[node name="signpost_simplified" parent="." instance=ExtResource("1_ikirr")]
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.211749, 2.362, 0)
+pixel_size = 0.01
+text = "LOGS:"
+font_size = 39
+outline_size = 11
+uppercase = true
+
+[node name="LogLabel" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.211749, 1.88218, 0)
+pixel_size = 0.01
+text = "12
+"
+font_size = 63
+outline_size = 11
+uppercase = true
